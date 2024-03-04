@@ -5,7 +5,7 @@ project(guiapp LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if(LINUX)
+if(UNIX)
     message("OS Linux")
 else()
     message("OS Windows")
@@ -43,7 +43,7 @@ add_executable(guiapp main.cpp ${IMGUI_SRC} ${GLFW_SRC})
 
 
 message("Set path to lib...")
-if(LINUX)
+if(UNIX)
     set(LIBRARY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/static/amd64)
 else()
     set(LIBRARY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/windows/static/x86-64)
@@ -58,7 +58,7 @@ include_directories(
 
 message("Copy lib... ")
 
-if(LINUX)
+if(UNIX)
     target_link_libraries(guiapp PRIVATE
         ${LIBRARY_PATH}/libimgui.a
         ${LIBRARY_PATH}/libglfw3.a
