@@ -44,7 +44,7 @@ add_executable(guiapp main.cpp ${IMGUI_SRC} ${GLFW_SRC})
 
 message("Set path to lib...")
 if(LINUX)
-
+    set(LIBRARY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/static/amd64)
 else()
     set(LIBRARY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/windows/static/x86-64)
 endif()
@@ -56,16 +56,21 @@ include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/GLFW
 )
 
-target_link_libraries(guiapp PRIVATE
-    ${LIBRARY_PATH}/glfw3dll.lib
-    ${LIBRARY_PATH}/imgui.lib
-    ${LIBRARY_PATH}/OpenGL32.lib
-)
-
 message("Copy lib... ")
+
 if(LINUX)
+    target_link_libraries(guiapp PRIVATE
+        ${LIBRARY_PATH}/libimgui.a
+        ${LIBRARY_PATH}/libglfw3.a
+    )
 
 else()
+    target_link_libraries(guiapp PRIVATE
+        ${LIBRARY_PATH}/glfw3dll.lib
+        ${LIBRARY_PATH}/imgui.lib
+        ${LIBRARY_PATH}/OpenGL32.lib
+    )
+
     add_custom_command(
        TARGET ${PROJECT_NAME} POST_BUILD
        COMMAND ${CMAKE_COMMAND} -E copy
