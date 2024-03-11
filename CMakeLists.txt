@@ -69,6 +69,11 @@ if(UNIX)
         COMMAND ${CMAKE_COMMAND} -E copy
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/static/amd64/libglut.so.3.9.0
         $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/static/amd64/libOpenGL.so.0.0.0
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
 else()
     target_link_libraries(guiapp PRIVATE
