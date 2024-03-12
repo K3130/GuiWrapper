@@ -63,6 +63,7 @@ if(UNIX)
         ${LIBRARY_PATH}/libimgui.a
         ${LIBRARY_PATH}/libglfw3.a
         ${LIBRARY_PATH}/libglut.a
+        ${LIBRARY_PATH}/libGLU.a
     )
     add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
