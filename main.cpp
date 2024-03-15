@@ -17,6 +17,8 @@ int main(int argc, char** argv) {
     if (!glfwInit())
         return 1;
 
+
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
     // Create a GLFW window
     GLFWwindow* window = glfwCreateWindow(1280, 720, "ImGui Example", NULL, NULL);
     if (!window) {
