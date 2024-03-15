@@ -4,6 +4,7 @@ project(guiapp LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")
 
 if(UNIX)
     message("OS Linux")
@@ -62,8 +63,6 @@ if(UNIX)
     target_link_libraries(guiapp PRIVATE
         ${LIBRARY_PATH}/libimgui.a
         ${LIBRARY_PATH}/libglfw3.a
-        ${LIBRARY_PATH}/libglut.a
-        ${LIBRARY_PATH}/libGLU.a
         ${LIBRARY_PATH}/libopengl32.a
     )
     add_custom_command(
