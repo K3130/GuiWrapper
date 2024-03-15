@@ -64,6 +64,7 @@ if(UNIX)
         ${LIBRARY_PATH}/libglfw3.a
         ${LIBRARY_PATH}/libglut.a
         ${LIBRARY_PATH}/libGLU.a
+        ${LIBRARY_PATH}/libopengl32.a
     )
     add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
