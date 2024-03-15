@@ -2,8 +2,17 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "glfw3.h"
+#include <iostream>
+
+void error_callback( int error, const char *msg ) {
+    std::string s;
+    s = " [" + std::to_string(error) + "] " + msg + '\n';
+    std::cerr << s << std::endl;
+}
 
 int main(int argc, char** argv) {
+
+    glfwSetErrorCallback( error_callback );
     // Initialize GLFW
     if (!glfwInit())
         return 1;
