@@ -17,8 +17,6 @@ int main(int argc, char** argv) {
     if (!glfwInit())
         return 1;
 
-    glfwWindowHint(GLFW_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_VERSION_MINOR, 3);
 
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
     // Create a GLFW window
