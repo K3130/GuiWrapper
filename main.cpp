@@ -17,10 +17,14 @@ int main(int argc, char** argv) {
     if (!glfwInit())
         return 1;
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
     // Create a GLFW window
     GLFWwindow* window = glfwCreateWindow(1280, 720, "ImGui Example", NULL, NULL);
+    int code = glfwGetError(NULL);
+
     if (!window) {
         glfwTerminate();
         return 1;
