@@ -4,7 +4,7 @@ project(guiapp LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 set(CMAKE_BUILD_TYPE "Release")
 
 if(UNIX)
@@ -61,16 +61,12 @@ include_directories(
 message("Copy lib... ")
 
 if(UNIX)
+    find_package(OpenGL REQUIRED)
     target_link_libraries(guiapp PRIVATE
         ${LIBRARY_PATH}/libimgui.a
         ${LIBRARY_PATH}/libglfw3.a
-        ${LIBRARY_PATH}/libopengl32.a
+        OpenGL::GL
     )
-    add_custom_command(
-        TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/static/amd64/libglfw.so.3.3
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
 else()
     target_link_libraries(guiapp PRIVATE
