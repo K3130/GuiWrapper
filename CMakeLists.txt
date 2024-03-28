@@ -40,8 +40,12 @@ set(GLFW_SRC
         dependencies/imgui/backends/imgui_impl_opengl3.h
         dependencies/imgui/backends/imgui_impl_opengl3_loader.h
     )
+set(GUI_WRAPPER_SRC
+        guiwrapper/guiwrapper.h
+        guiwrapper/guiwrapper.cpp
+    )
 
-add_executable(guiapp main.cpp ${IMGUI_SRC} ${GLFW_SRC})
+add_executable(guiapp main.cpp ${IMGUI_SRC} ${GLFW_SRC} ${GUI_WRAPPER_SRC})
 
 
 message("Set path to lib...")
