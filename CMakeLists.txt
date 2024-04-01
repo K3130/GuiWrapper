@@ -43,6 +43,7 @@ set(GLFW_SRC
 set(GUI_WRAPPER_SRC
         guiwrapper/guiwrapper.h
         guiwrapper/guiwrapper.cpp
+        dependencies/stb_image.h
     )
 
 add_executable(guiapp main.cpp ${IMGUI_SRC} ${GLFW_SRC} ${GUI_WRAPPER_SRC})
@@ -100,8 +101,8 @@ endif()
 add_custom_command(
    TARGET ${PROJECT_NAME} POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy
-   ${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.ico
-   $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/icon.ico)
+   ${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.png
+   $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/icon.png)
 
 
 

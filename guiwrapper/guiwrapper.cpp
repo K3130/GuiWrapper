@@ -1,5 +1,8 @@
 #include "guiwrapper.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 void error_callback( int error, const char *msg ) {
     std::string s;
     s = " [" + std::to_string(error) + "] " + msg + '\n';
@@ -27,6 +30,11 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     m_window = glfwCreateWindow(1280, 720, "ImGui Example", NULL, NULL);
+
+    GLFWimage icon[1];
+    icon[0].pixels = stbi_load("resources/icon.png", &icon[0].width, &icon[0].height, 0, 4);
+    glfwSetWindowIcon(m_window, 1, icon);
+    stbi_image_free(icon[0].pixels);
 
     if (!m_window) {
         glfwTerminate();
