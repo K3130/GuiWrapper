@@ -97,6 +97,11 @@ else()
 
 endif()
 
+add_custom_command(
+   TARGET ${PROJECT_NAME} POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy
+   ${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.ico
+   $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/icon.ico)
 
 
 
