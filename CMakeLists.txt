@@ -4,7 +4,7 @@ project(guiapp LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
 set(CMAKE_BUILD_TYPE "Release")
 
 if(UNIX)
@@ -44,6 +44,7 @@ set(GUI_WRAPPER_SRC
         guiwrapper/guiwrapper.h
         guiwrapper/guiwrapper.cpp
         dependencies/stb_image.h
+        guiwrapper/modules.h
     )
 
 add_executable(guiapp main.cpp ${IMGUI_SRC} ${GLFW_SRC} ${GUI_WRAPPER_SRC})

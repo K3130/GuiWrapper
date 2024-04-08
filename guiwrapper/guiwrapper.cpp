@@ -9,10 +9,6 @@ void error_callback( int error, const char *msg ) {
     std::cerr << s << std::endl;
 }
 
-void testFunc() {
-    ImGui::Begin("111");
-}
-
 GuiWrapper::GuiWrapper() : m_window(nullptr)
 {
 
@@ -29,7 +25,7 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    m_window = glfwCreateWindow(1280, 720, "ImGui Example", NULL, NULL);
+    m_window = glfwCreateWindow(aWindowWidth, aWindowHeight, aWindowTitle, NULL, NULL);
 
     GLFWimage icon[1];
     icon[0].pixels = stbi_load("resources/icon.png", &icon[0].width, &icon[0].height, 0, 4);
@@ -42,6 +38,8 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
     }
 
     glfwMakeContextCurrent(m_window);
+
+    glfwSwapInterval(1);
 
     // Initialize ImGui
     IMGUI_CHECKVERSION();
@@ -56,32 +54,30 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
 
 void GuiWrapper::Render()
 {
+    bool f_open = true;
     while (!glfwWindowShouldClose(m_window))
     {
         glfwPollEvents();
-
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
         //...Base code
-        Frame f(0, 0, 700, 700, "First", nullptr, ImGuiWindowFlags_None | ImGuiWindowFlags_NoMove);
-        //f.SetText("this text");
-        //f.SetButton(500, 500, 30, 100, "button", testFunc);
-
-        //Frame f2(1000, 500, 200, 200, "Second", nullptr, ImGuiWindowFlags_None);
-        //f2.SetText("это текст");
-
-
-        //---
-        //ImGui::End();
+        for (size_t i = 0; i < m_frames.size(); i++)
+        {
+            m_frames[i].Show();
+            m_frames[i].End();
+        }   
         //...
+
+
+
 
         ImGui::Render();
         int display_w, display_h;
         glfwGetFramebufferSize(m_window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+        glClearColor(0.22f, 0.26f, 0.37f, 1.00f);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(m_window);
