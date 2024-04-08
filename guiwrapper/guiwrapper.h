@@ -21,11 +21,11 @@ struct Frame
 
     }
 
-    void SetText(float aX, float aY, const std::string& aText) {
-        m_texts.push_back(GuiWrapperModules::Text {aX, aY, aText.c_str()}); }
+    void SetText(float aX, float aY, const char* aText) {
+        m_texts.push_back(GuiWrapperModules::Text {aX, aY, aText}); }
 
-    void SetButton(float aX, float aY, float aWidth, float aHeight, const std::string& aText, void(aFunc)()) {
-        m_buttons.push_back(GuiWrapperModules::Button {aX, aY, aWidth, aHeight, aText.c_str(), aFunc});
+    void SetButton(float aX, float aY, float aWidth, float aHeight, const char* aText, void(aFunc)()) {
+        m_buttons.push_back(GuiWrapperModules::Button {aX, aY, aWidth, aHeight, aText, aFunc});
     }
 
     void End() { ImGui::End(); }

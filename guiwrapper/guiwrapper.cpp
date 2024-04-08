@@ -47,8 +47,8 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     m_font = io.Fonts->AddFontFromFileTTF("resources/roboto.ttf",
-                                          15.0f, NULL,
-                                          ImGui::GetIO().Fonts->GetGlyphRangesCyrillic());
+                                          20.0f, nullptr,
+                                          io.Fonts->GetGlyphRangesCyrillic());
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(m_window, true);
     ImGui_ImplOpenGL3_Init("#version 130");
@@ -65,7 +65,6 @@ void GuiWrapper::Render()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        ImGui::PushFont(m_font);
 
         //...Base code
         for (size_t i = 0; i < m_frames.size(); i++)
