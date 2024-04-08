@@ -21,7 +21,8 @@ struct Frame
 
     }
 
-    void SetText(const std::string& aText) { ImGui::Text(aText.c_str()); }
+    void SetText(float aX, float aY, const std::string& aText) {
+        m_texts.push_back(GuiWrapperModules::Text {aX, aY, aText.c_str()}); }
 
     void SetButton(float aX, float aY, float aWidth, float aHeight, const std::string& aText, void(aFunc)()) {
         m_buttons.push_back(GuiWrapperModules::Button {aX, aY, aWidth, aHeight, aText.c_str(), aFunc});
@@ -44,6 +45,11 @@ struct Frame
                 if (ImGui::Button(m_buttons[i].m_t, ImVec2(m_buttons[i].m_w, m_buttons[i].m_h)))
                     m_buttons[i].m_f();
             }
+            //Show texts
+            for (size_t i = 0; i < m_texts.size(); i++) {
+                ImGui::SetCursorPos(ImVec2(m_texts[i].m_x, m_texts[i].m_y));
+                ImGui::Text("%s", m_texts[i].m_t);
+            }
         }
 
     }
@@ -54,6 +60,7 @@ private:
     bool* m_isOpen;
     ImGuiWindowFlags m_flags;
     std::vector<GuiWrapperModules::Button> m_buttons;
+    std::vector<GuiWrapperModules::Text> m_texts;
 };
 
 class GuiWrapper
@@ -66,6 +73,7 @@ public:
     void SetFrame(const Frame &aFrame) { m_frames.push_back(aFrame); }
 private:
     GLFWwindow* m_window;
+    ImFont* m_font;
     std::vector<Frame> m_frames;
 };
 

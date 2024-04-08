@@ -7,11 +7,12 @@ void testFunc() {
 int main(int argc, char** argv) {
 
     GuiWrapper w;
-    w.Init(800, 600, u8"Главное окно.");
+    w.Init(800, 600, "Главное окно.");
 
     bool f_open = true;
-    Frame f(0, 0, 700, 700, "First", &f_open, ImGuiWindowFlags_None);
-    f.SetButton(500, 500, 100, 20, "button", testFunc);
+    Frame f(0, 0, 700, 700, u8"Фрейм", &f_open, ImGuiWindowFlags_None);
+    f.SetButton(500, 500, 100, 20, u8"кнопка", testFunc);
+    f.SetText(100, 100, "Empty text");
     w.SetFrame(f);
 
     w.Render();
