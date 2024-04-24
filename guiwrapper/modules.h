@@ -10,7 +10,7 @@ namespace GuiWrapperModules
         float m_w;
         float m_h;
         const char* m_t;
-        void (*m_f) ();
+        const std::function<void()> m_f;
     };
 
     struct Text

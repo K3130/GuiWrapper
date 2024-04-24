@@ -9,6 +9,7 @@ void error_callback( int error, const char *msg ) {
     std::cerr << s << std::endl;
 }
 
+
 GuiWrapper::GuiWrapper() : m_window(nullptr)
 {
 
@@ -25,12 +26,27 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    m_window = glfwCreateWindow(aWindowWidth, aWindowHeight, aWindowTitle, NULL, NULL);
+    glfwWindowHint(GLFW_DECORATED, GLFW_FALSE); // Hide decoration window
 
+    m_window = glfwCreateWindow(aWindowWidth, aWindowHeight, aWindowTitle, NULL, NULL);
+    glfwSetCursorPosCallback(m_window, cursor_position_callback);
+    glfwSetMouseButtonCallback(m_window, mouse_button_callback);
+
+
+    // Set window center
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+    int screenWidth = mode->width;
+    int screenHeight = mode->height;
+    glfwSetWindowPos(m_window, (screenWidth - aWindowWidth) / 2, (screenHeight - aWindowHeight) / 2);
+    //---
+
+    // Set icon
     GLFWimage icon[1];
     icon[0].pixels = stbi_load("resources/icon.png", &icon[0].width, &icon[0].height, 0, 4);
     glfwSetWindowIcon(m_window, 1, icon);
     stbi_image_free(icon[0].pixels);
+    //--
 
     if (!m_window) {
         glfwTerminate();
@@ -45,18 +61,21 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
     // Initialize ImGui
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    m_font = io.Fonts->AddFontFromFileTTF("resources/roboto.ttf",
+    m_io = &ImGui::GetIO(); (void)m_io;
+    m_io->ConfigWindowsMoveFromTitleBarOnly = true;
+    m_font = m_io->Fonts->AddFontFromFileTTF("resources/roboto.ttf",
                                           20.0f, nullptr,
-                                          io.Fonts->GetGlyphRangesCyrillic());
+                                             m_io->Fonts->GetGlyphRangesCyrillic());
+
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(m_window, true);
     ImGui_ImplOpenGL3_Init("#version 130");
 
+
     return 0;
 }
 
-void GuiWrapper::Render()
+void GuiWrapper::Render(const std::function<void()>aFunc)
 {
     bool f_open = true;
     while (!glfwWindowShouldClose(m_window))
@@ -65,6 +84,12 @@ void GuiWrapper::Render()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+
+        //Rounding
+        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 4.0f);
+
+
+
 
         //...Base code
         for (size_t i = 0; i < m_frames.size(); i++)
@@ -75,15 +100,32 @@ void GuiWrapper::Render()
         //...
 
 
+        //... Arbitrary function
+        if(aFunc != nullptr)
+            aFunc();
+        //
+
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        //---
+
+        //ImGui::ShowDemoWindow();
+
 
 
         ImGui::Render();
         int display_w, display_h;
+
         glfwGetFramebufferSize(m_window, &display_w, &display_h);
+
         glViewport(0, 0, display_w, display_h);
+
         glClearColor(0.22f, 0.26f, 0.37f, 1.00f);
+
         glClear(GL_COLOR_BUFFER_BIT);
+
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
         glfwSwapBuffers(m_window);
     }
 }
@@ -97,3 +139,5 @@ void GuiWrapper::Destroy()
     glfwDestroyWindow(m_window);
     glfwTerminate();
 }
+
+

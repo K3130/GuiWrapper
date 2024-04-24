@@ -10,12 +10,15 @@ int main(int argc, char** argv) {
     w.Init(800, 600, "Главное окно.");
 
     bool f_open = true;
-    Frame f(0, 0, 600, 500, u8"Фрейм", &f_open, ImGuiWindowFlags_None);
+    Frame f(w.GetWindowPoint(), 0, 0, 800, 800, u8"Фрейм", &f_open,
+        ImGuiWindowFlags_None | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
     f.SetButton(500, 500, 100, 40, u8"кнопка", testFunc);
     f.SetText(100, 100, u8"Обычный текст.");
     w.SetFrame(f);
 
-    w.Render();
+
+    //Если закрыть фрейм,выполняется выход из программы
+    w.Render([&](){if (!f_open) {w.Destroy();} } );
 
 
 
