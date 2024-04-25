@@ -19,6 +19,23 @@ namespace GuiWrapperModules
         float m_y;
         const char* m_t;
     };
+
+    struct MenuItem
+    {
+        const char* m_lable;
+        const char* m_shortcut = 0;
+        bool m_enable;
+
+    };
+
+    struct Menu
+    {
+        const char* m_t;
+        std::vector<MenuItem> m_menuitem;
+    };
+
+
+
 }
 
 

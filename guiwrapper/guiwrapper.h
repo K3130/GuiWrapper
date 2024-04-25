@@ -61,6 +61,9 @@ struct Frame
         m_buttons.push_back(GuiWrapperModules::Button {aX, aY, aWidth, aHeight, aText, aFunc});
     }
 
+    void SetMenuInMenuBar(const char* aText, const std::vector<GuiWrapperModules::MenuItem> aItem) {
+        m_menubar.push_back({ aText, aItem });
+    }
 
     void End() { ImGui::End(); }
 
@@ -122,6 +125,26 @@ struct Frame
             }
             //---
 
+            //---Show menu bar
+            for (size_t i = 0; i < m_menubar.size(); i++)
+            {
+                if(ImGui::BeginMenuBar())
+                {
+                    if(ImGui::BeginMenu(m_menubar[i].m_t))
+                    {
+                        for (size_t j = 0; j < m_menubar[i].m_menuitem.size(); j++) {
+                            ImGui::MenuItem(m_menubar[i].m_menuitem[j].m_lable,
+                                            m_menubar[i].m_menuitem[j].m_shortcut,
+                                            m_menubar[i].m_menuitem[j].m_enable);
+                            ImGui::Separator();
+                        }
+
+                        ImGui::EndMenu();
+                    }
+                    ImGui::EndMenuBar();
+                }
+            }
+            //---
 
 
         }
@@ -137,8 +160,7 @@ private:
         cp_y += offset_cpy;
     }
 
-    bool WindowResized()
-    {
+    bool WindowResized() {
         ImVec2 size = ImGui::GetWindowSize();
         if ((int)size.x != m_width || (int)size.y != m_height)
         {
@@ -155,6 +177,7 @@ private:
     ImGuiWindowFlags m_flags;
     std::vector<GuiWrapperModules::Button> m_buttons;
     std::vector<GuiWrapperModules::Text> m_texts;
+    std::vector<GuiWrapperModules::Menu> m_menubar;
 };
 
 class GuiWrapper
