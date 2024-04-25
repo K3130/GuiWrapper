@@ -28,6 +28,7 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
 
     glfwWindowHint(GLFW_DECORATED, GLFW_FALSE); // Hide decoration window
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE); // Transparent
+    glfwWindowHint(GLFW_AUTO_ICONIFY, GLFW_FALSE);
 
     m_window = glfwCreateWindow(aWindowWidth, aWindowHeight, aWindowTitle, NULL, NULL);
     glfwSetCursorPosCallback(m_window, cursor_position_callback);

@@ -78,8 +78,18 @@ struct Frame
             //---Main window
             ImGui::SetNextWindowBgAlpha(1); //off transparent
             ImGui::Begin(m_title, m_isOpen, m_flags);
+            ImGuiStyle& style = ImGui::GetStyle();
+            style.WindowMenuButtonPosition = ImGuiDir_Right;
 
-            //---Drag window by title only
+            //--Collapsed
+            if(ImGui::IsWindowCollapsed())
+            {
+                glfwIconifyWindow(m_window);
+                ImGui::SetWindowCollapsed(false);
+            }
+            //---
+
+            //---Drag window by title only (Доработать перемешение по вертикали)
             if (ImGui::IsItemHovered() && ImGui::IsMouseDragging(ImGuiMouseButton_Left))
             {
                 buttonEvent = 1;
@@ -88,7 +98,7 @@ struct Frame
             //---
 
             //---Resize window
-            if (WindowResized())
+            if (WindowResized() && !ImGui::IsWindowCollapsed())
             {
                 ImVec2 size = ImGui::GetWindowSize();
                 glfwSetWindowSize(m_window, size.x, size.y);
