@@ -47,7 +47,6 @@ static void mouse_button_callback(GLFWwindow* window, int button, int action, in
 }
 // ---
 
-
 struct Frame
 {
     Frame(GLFWwindow* aWindow, float aX, float aY, float aWidth, float aHeight,
@@ -77,6 +76,7 @@ struct Frame
         {
 
             //---Main window
+            ImGui::SetNextWindowBgAlpha(1); //off transparent
             ImGui::Begin(m_title, m_isOpen, m_flags);
 
             //---Drag window by title only
@@ -85,6 +85,16 @@ struct Frame
                 buttonEvent = 1;
             } else
                 buttonEvent = 0;
+            //---
+
+            //---Resize window
+            if (WindowResized())
+            {
+                ImVec2 size = ImGui::GetWindowSize();
+                glfwSetWindowSize(m_window, size.x, size.y);
+                ImGui::SetNextWindowSize(size, ImGuiCond_FirstUseEver);
+
+            }
             //---
 
             //---Show buttons
@@ -115,8 +125,16 @@ private:
         offset_cpy = 0;
         cp_x += offset_cpx;
         cp_y += offset_cpy;
+    }
 
-
+    bool WindowResized()
+    {
+        ImVec2 size = ImGui::GetWindowSize();
+        if ((int)size.x != m_width || (int)size.y != m_height)
+        {
+            return true;
+        }
+        return false;
     }
 
 private:

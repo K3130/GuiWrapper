@@ -27,11 +27,11 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     glfwWindowHint(GLFW_DECORATED, GLFW_FALSE); // Hide decoration window
+    glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE); // Transparent
 
     m_window = glfwCreateWindow(aWindowWidth, aWindowHeight, aWindowTitle, NULL, NULL);
     glfwSetCursorPosCallback(m_window, cursor_position_callback);
     glfwSetMouseButtonCallback(m_window, mouse_button_callback);
-
 
     // Set window center
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -63,9 +63,12 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
     ImGui::CreateContext();
     m_io = &ImGui::GetIO(); (void)m_io;
     m_io->ConfigWindowsMoveFromTitleBarOnly = true;
+    m_io->ConfigWindowsResizeFromEdges = false;
     m_font = m_io->Fonts->AddFontFromFileTTF("resources/roboto.ttf",
                                           20.0f, nullptr,
                                              m_io->Fonts->GetGlyphRangesCyrillic());
+
+
 
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(m_window, true);
@@ -120,7 +123,8 @@ void GuiWrapper::Render(const std::function<void()>aFunc)
 
         glViewport(0, 0, display_w, display_h);
 
-        glClearColor(0.22f, 0.26f, 0.37f, 1.00f);
+        //glClearColor(0.22f, 0.26f, 0.37f, 1.00f);
+        glClearColor(0, 0, 0, 0);
 
         glClear(GL_COLOR_BUFFER_BIT);
 
