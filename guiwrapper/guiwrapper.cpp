@@ -68,6 +68,8 @@ bool GuiWrapper::Init(int aWindowWidth, int aWindowHeight, const char *aWindowTi
     m_font = m_io->Fonts->AddFontFromFileTTF("resources/roboto.ttf",
                                           20.0f, nullptr,
                                              m_io->Fonts->GetGlyphRangesCyrillic());
+    //Set min window size
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2(640, 480));
 
 
 
@@ -113,7 +115,8 @@ void GuiWrapper::Render(const std::function<void()>aFunc)
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
         //---
 
-        //ImGui::ShowDemoWindow();
+        ImGui::ShowDemoWindow();
+        std::string s = "text";
 
 
 

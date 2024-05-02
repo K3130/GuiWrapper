@@ -92,10 +92,13 @@ struct Frame
             }
             //---
 
-            //---Drag window by title only (Доработать перемешение по вертикали)
-            if (ImGui::IsItemHovered() && ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+            //---Drag window by title only
+            if (ImGui::IsMouseDragging(ImGuiMouseButton_Left))
             {
-                buttonEvent = 1;
+                if(ImGui::IsItemHovered())
+                {
+                    buttonEvent = 1;
+                }
             } else
                 buttonEvent = 0;
             //---
