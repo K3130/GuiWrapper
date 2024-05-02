@@ -9,7 +9,6 @@ void testMenuItem() {
 }
 
 
-
 int main(int argc, char** argv) {
 
     GuiWrapper w;

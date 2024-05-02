@@ -34,7 +34,7 @@ namespace GuiWrapperModules
 
     struct InputText
     {
-
+        const char* m_text;
     };
 
 

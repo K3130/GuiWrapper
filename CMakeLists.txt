@@ -32,6 +32,8 @@ set(IMGUI_SRC
         dependencies/imgui/imstb_rectpack.h
         dependencies/imgui/imstb_textedit.h
         dependencies/imgui/imstb_truetype.h
+        dependencies/imgui/imgui_stdlib.cpp
+        dependencies/imgui/imgui_stdlib.h
         )
 set(GLFW_SRC
         dependencies/imgui/backends/imgui_impl_glfw.cpp

@@ -5,6 +5,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "imgui_stdlib.h"
 #include "glfw3.h"
 #include <iostream>
 #include <vector>
@@ -184,6 +185,7 @@ private:
     std::vector<GuiWrapperModules::Button> m_buttons;
     std::vector<GuiWrapperModules::Text> m_texts;
     std::vector<GuiWrapperModules::Menu> m_menubar;
+    std::vector<GuiWrapperModules::InputText> m_inputText;
 };
 
 class GuiWrapper
