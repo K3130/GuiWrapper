@@ -23,8 +23,7 @@ namespace GuiWrapperModules
     struct MenuItem
     {
         const char* m_lable;
-        const char* m_shortcut = 0;
-        bool m_enable;
+        const std::function<void()> m_f;
     };
 
     struct Menu

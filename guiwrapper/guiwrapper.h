@@ -136,9 +136,12 @@ struct Frame
                     if(ImGui::BeginMenu(m_menubar[i].m_t))
                     {
                         for (size_t j = 0; j < m_menubar[i].m_menuitem.size(); j++) {
+                            bool isPressed = false;
                             ImGui::MenuItem(m_menubar[i].m_menuitem[j].m_lable,
-                                            m_menubar[i].m_menuitem[j].m_shortcut,
-                                            m_menubar[i].m_menuitem[j].m_enable);
+                                            NULL,
+                                            &isPressed);
+                            if (isPressed)
+                                m_menubar[i].m_menuitem[j].m_f();
                             ImGui::Separator();
                         }
 

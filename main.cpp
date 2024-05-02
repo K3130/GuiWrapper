@@ -1,8 +1,14 @@
 #include "guiwrapper/guiwrapper.h"
 
-void testFunc() {
-    ImGui::Begin("111");
+void testButton() {
+    std::cout << "Button presed" << std::endl;
 }
+
+void testMenuItem() {
+    std::cout << "Menu item pressed" << std::endl;
+}
+
+
 
 int main(int argc, char** argv) {
 
@@ -14,19 +20,20 @@ int main(int argc, char** argv) {
                   ImGuiWindowFlags_None
                 | ImGuiWindowFlags_NoMove
                 | ImGuiWindowFlags_MenuBar);
-    f.SetButton(500, 500, 100, 40, u8"кнопка", testFunc);
+    f.SetButton(500, 500, 100, 40, u8"кнопка", testButton);
     f.SetText(100, 100, u8"Обычный текст.");
 
 
 
-    std::vector<GuiWrapperModules::MenuItem> FileMenu { {"New", NULL, false},
-                                                  {"Open", NULL, false},
-                                                  {"Close", NULL, false}};
+    std::vector<GuiWrapperModules::MenuItem> FileMenu { {"New", testMenuItem},
+                                                  {"Open", nullptr},
+                                                  {"Close", nullptr}};
     f.SetMenuInMenuBar("File", FileMenu);
 
-    std::vector<GuiWrapperModules::MenuItem> HelpMenu { {"How To", NULL, false},
-                                                      {"Как помочь?", NULL, false},
-                                                      {"О проекте.", NULL, false}};
+
+    std::vector<GuiWrapperModules::MenuItem> HelpMenu { {"How To", nullptr},
+                                                      {"Как помочь?", nullptr},
+                                                      {"О проекте.", nullptr}};
     f.SetMenuInMenuBar("Help", HelpMenu);
 
     w.SetFrame(f);
