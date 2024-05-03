@@ -46,7 +46,6 @@ int main(int argc, char** argv) {
                            "DDDD", "EEEE", "FFFF",
                            "GGGG", "HHHH", "IIIIIII",
                            "JJJJ", "KKKKKKK" };
-
     f.SetComboBox({300, 50, 200, "Combobox", items, 11});
 
     w.SetFrame(f);
