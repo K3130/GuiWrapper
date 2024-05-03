@@ -34,7 +34,12 @@ namespace GuiWrapperModules
 
     struct InputText
     {
-        const char* m_text;
+        float m_x;
+        float m_y;
+        float m_w;
+        float m_h;
+        const char* m_lable;
+        std::string *m_bufer;
     };
 
 

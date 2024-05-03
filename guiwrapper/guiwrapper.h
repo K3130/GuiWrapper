@@ -66,6 +66,10 @@ struct Frame
         m_menubar.push_back({ aText, aItem });
     }
 
+    void SetInputText(const GuiWrapperModules::InputText aInText) {
+        m_inputText.push_back(aInText);
+    }
+
     void End() { ImGui::End(); }
 
     void Show()
@@ -153,6 +157,22 @@ struct Frame
             }
             //---
 
+            //---Show input texts
+            for (size_t i = 0; i < m_inputText.size(); i++)
+            {
+                ImGui::PushStyleColor(ImGuiCol_ScrollbarBg, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+                ImGui::SetCursorPos(ImVec2(m_inputText[i].m_x, m_inputText[i].m_y));
+                ImGui::BeginChildFrame(ImGui::GetID("##Edit_Window_Container"),
+                                       ImVec2(m_inputText[i].m_x, m_inputText[i].m_y),
+                                       ImGuiWindowFlags_AlwaysVerticalScrollbar | ImGuiWindowFlags_AlwaysHorizontalScrollbar);
+                ImGui::InputTextMultiline(m_inputText[i].m_lable,
+                                          m_inputText[i].m_bufer,
+                                          ImVec2(m_inputText[i].m_w, m_inputText[i].m_h),
+                                          ImGuiInputTextFlags_None);
+
+                ImGui::EndChildFrame();
+            }
+            //---
 
         }
 

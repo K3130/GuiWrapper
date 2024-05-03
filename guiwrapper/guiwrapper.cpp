@@ -116,7 +116,7 @@ void GuiWrapper::Render(const std::function<void()>aFunc)
         //---
 
         ImGui::ShowDemoWindow();
-        std::string s = "text";
+
 
 
 
