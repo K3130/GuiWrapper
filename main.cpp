@@ -39,6 +39,16 @@ int main(int argc, char** argv) {
     std::string input_bufer;
     f.SetInputText({200, 200, 300, 300, "##Input text", &input_bufer});
 
+    std::string input_line_buff;
+    f.SetInputLine({10, 600, 300, "##Input line", &input_line_buff});
+
+    const char* items[] = { "AAAA", "BBBB", "CCCC",
+                           "DDDD", "EEEE", "FFFF",
+                           "GGGG", "HHHH", "IIIIIII",
+                           "JJJJ", "KKKKKKK" };
+
+    f.SetComboBox({300, 50, 200, "Combobox", items, 11});
+
     w.SetFrame(f);
 
 

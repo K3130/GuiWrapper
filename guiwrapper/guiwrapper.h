@@ -70,6 +70,14 @@ struct Frame
         m_inputText.push_back(aInText);
     }
 
+    void SetInputLine(const GuiWrapperModules::InputLine aInLine) {
+        m_inputLine.push_back(aInLine);
+    }
+
+    void SetComboBox(const GuiWrapperModules::ComboBox aComBox) {
+        m_comboBoxes.push_back(aComBox);
+    }
+
     void End() { ImGui::End(); }
 
     void Show()
@@ -174,6 +182,30 @@ struct Frame
             }
             //---
 
+            //---Show input line
+            for (size_t i = 0; i < m_inputLine.size(); i++)
+            {
+                ImGui::SetCursorPos(ImVec2(m_inputLine[i].m_x, m_inputLine[i].m_y));
+                ImGui::PushItemWidth(m_inputLine[i].m_w);
+                ImGui::InputText(m_inputLine[i].m_lable,
+                                 m_inputLine[i].m_bufer,
+                                 ImGuiInputTextFlags_None);
+                ImGui::PopItemWidth();
+            }
+            //---
+
+            //---Show combo boxes
+            for (size_t i = 0; i < m_comboBoxes.size(); i++)
+            {
+                ImGui::SetCursorPos(ImVec2(m_comboBoxes[i].m_x, m_comboBoxes[i].m_y));
+                ImGui::PushItemWidth(m_comboBoxes[i].m_w);
+                ImGui::Combo(m_comboBoxes[i].m_lable,
+                             &m_comboBoxes[i].m_item_current,
+                             m_comboBoxes[i].m_items, m_comboBoxes[i].m_size);
+                ImGui::PopItemWidth();
+            }
+            //---
+
         }
 
     }
@@ -206,6 +238,8 @@ private:
     std::vector<GuiWrapperModules::Text> m_texts;
     std::vector<GuiWrapperModules::Menu> m_menubar;
     std::vector<GuiWrapperModules::InputText> m_inputText;
+    std::vector<GuiWrapperModules::InputLine> m_inputLine;
+    std::vector<GuiWrapperModules::ComboBox> m_comboBoxes;
 };
 
 class GuiWrapper

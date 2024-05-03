@@ -115,7 +115,7 @@ void GuiWrapper::Render(const std::function<void()>aFunc)
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
         //---
 
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
 
 
 

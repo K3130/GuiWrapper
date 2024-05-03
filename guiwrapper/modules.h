@@ -42,6 +42,26 @@ namespace GuiWrapperModules
         std::string *m_bufer;
     };
 
+    struct InputLine
+    {
+        float m_x;
+        float m_y;
+        float m_w;
+        const char* m_lable;
+        std::string *m_bufer;
+    };
+
+    struct ComboBox
+    {
+        float m_x;
+        float m_y;
+        float m_w;
+        const char* m_lable;
+        const char** m_items;
+        size_t m_size;
+        int m_item_current = 0;
+    };
+
 
 
 }
