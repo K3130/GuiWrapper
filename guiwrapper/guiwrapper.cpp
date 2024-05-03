@@ -115,7 +115,7 @@ void GuiWrapper::Render(const std::function<void()>aFunc)
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
         //---
 
-        //ImGui::ShowDemoWindow();
+        ImGui::ShowDemoWindow();
 
 
 
@@ -140,12 +140,10 @@ void GuiWrapper::Render(const std::function<void()>aFunc)
 
 void GuiWrapper::Destroy()
 {
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-
     glfwDestroyWindow(m_window);
     glfwTerminate();
+    exit(0);
 }
 
 
