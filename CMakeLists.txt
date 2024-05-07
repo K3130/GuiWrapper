@@ -73,6 +73,7 @@ include_directories(
 message("Copy lib... ")
 
 if(UNIX)
+    cmake_policy(SET CMP0072 NEW)
     find_package(OpenGL REQUIRED)
     target_link_libraries(guiapp PRIVATE
         ${LIBRARY_PATH}/libimgui.a
