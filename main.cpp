@@ -2,6 +2,7 @@
 
 void testButton() {
     std::cout << "Button presed" << std::endl;
+    printf("%s\n", glGetString(GL_VERSION));
 }
 
 void testMenuItem() {
