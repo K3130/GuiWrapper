@@ -55,7 +55,6 @@ set(GUI_WRAPPER_SRC
 
 add_executable(guiapp main.cpp ${IMGUI_SRC} ${GLFW_SRC} ${GUI_WRAPPER_SRC})
 
-
 message("Set path to lib...")
 if(UNIX)
     set(LIBRARY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/linux/static/amd64)
