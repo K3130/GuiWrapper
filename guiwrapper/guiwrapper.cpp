@@ -141,8 +141,7 @@ void GuiWrapper::Render(const std::function<void()>aFunc)
 void GuiWrapper::Destroy()
 {
     ImGui::DestroyContext();
-    glfwDestroyWindow(m_window);
-    glfwTerminate();
+    glfwSetWindowShouldClose(m_window, true);
     exit(0);
 }
 
