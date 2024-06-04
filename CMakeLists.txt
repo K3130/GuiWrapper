@@ -1,14 +1,16 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(guiapp LANGUAGES CXX)
+project(GuiWrapper LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 if(UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
 else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -mwindows")
 endif()
+
 set(CMAKE_BUILD_TYPE "Release")
 
 if(UNIX)
@@ -17,12 +19,6 @@ else()
     message("OS Windows")
 endif()
 
-include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
-        ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui
-        ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/backends
-        ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/GLFW
-)
 
 set(IMGUI_SRC
         dependencies/imgui/imgui.h
@@ -53,7 +49,7 @@ set(GUI_WRAPPER_SRC
         guiwrapper/modules.h
     )
 
-add_executable(guiapp main.cpp ${IMGUI_SRC} ${GLFW_SRC} ${GUI_WRAPPER_SRC})
+add_library(GuiWrapper ${IMGUI_SRC} ${GLFW_SRC} ${GUI_WRAPPER_SRC})
 
 message("Set path to lib...")
 if(UNIX)
@@ -62,7 +58,7 @@ else()
     set(LIBRARY_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/windows/static/x86-64)
 endif()
 
-include_directories(
+target_include_directories(GuiWrapper PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/dependencies
         ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui
         ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/backends
@@ -74,7 +70,7 @@ message("Copy lib... ")
 if(UNIX)
     cmake_policy(SET CMP0072 NEW)
     find_package(OpenGL REQUIRED)
-    target_link_libraries(guiapp PRIVATE
+    target_link_libraries(GuiWrapper PRIVATE
         ${LIBRARY_PATH}/libimgui.a
         ${LIBRARY_PATH}/libglfw3.a
         OpenGL::GL
@@ -82,7 +78,7 @@ if(UNIX)
 
 else()
 
-    target_link_libraries(guiapp PRIVATE
+    target_link_libraries(GuiWrapper PRIVATE
         ${LIBRARY_PATH}/glfw3dll.lib
         ${LIBRARY_PATH}/imgui.lib
         ${LIBRARY_PATH}/OpenGL32.lib
@@ -92,17 +88,17 @@ else()
        TARGET ${PROJECT_NAME} POST_BUILD
        COMMAND ${CMAKE_COMMAND} -E copy
        ${CMAKE_CURRENT_SOURCE_DIR}/lib/windows/static/x86-64/glfw3.dll
-       $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+       ${CMAKE_BINARY_DIR})
     add_custom_command(
        TARGET ${PROJECT_NAME} POST_BUILD
        COMMAND ${CMAKE_COMMAND} -E copy
        ${CMAKE_CURRENT_SOURCE_DIR}/lib/windows/static/x86-64/libgcc_s_seh-1.dll
-       $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+       ${CMAKE_BINARY_DIR})
     add_custom_command(
        TARGET ${PROJECT_NAME} POST_BUILD
        COMMAND ${CMAKE_COMMAND} -E copy
        ${CMAKE_CURRENT_SOURCE_DIR}/lib/windows/static/x86-64/libstdc++-6.dll
-       $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+       ${CMAKE_BINARY_DIR})
 
 endif()
 
@@ -110,13 +106,13 @@ add_custom_command(
    TARGET ${PROJECT_NAME} POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy
    ${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.png
-   $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/icon.png)
+   ${CMAKE_BINARY_DIR}/resources/icon.png)
 
 add_custom_command(
    TARGET ${PROJECT_NAME} POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy
    ${CMAKE_CURRENT_SOURCE_DIR}/resources/roboto.ttf
-   $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/roboto.ttf)
+   ${CMAKE_BINARY_DIR}/resources/roboto.ttf)
 
 
 
