@@ -30,3 +30,33 @@ install(TARGETS untitled
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 ```
+Простой пример:    
+```C++
+#include "GuiWrapper/guiwrapper/guiwrapper.h"
+
+void testButton() {
+    std::cout << "Button presed" << std::endl;
+    printf("%s\n", glGetString(GL_VERSION));
+}
+
+void testMenuItem() {
+    std::cout << "Menu item pressed" << std::endl;
+}
+
+int main(int argc, char** argv)
+{
+    GuiWrapper w;
+    w.Init(800, 800, "Главное окно.");
+        bool f_open = true;
+        Frame f(w.GetWindowPoint(), 0, 0, 800, 800, u8"Фрейм", &f_open,
+                      ImGuiWindowFlags_None
+                    | ImGuiWindowFlags_NoMove
+                    | ImGuiWindowFlags_MenuBar
+                    | ImGuiWindowFlags_HorizontalScrollbar);
+        f.SetButton(500, 500, 100, 40, u8"кнопка", testButton);
+        f.SetText(100, 100, u8"Обычный текст.");
+    w.SetFrame(f);
+    w.Render([&](){if (!f_open) {w.Destroy();} } );
+    return 0;
+}
+```
